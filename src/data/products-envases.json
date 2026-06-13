@@ -1,0 +1,54 @@
+[
+  {
+    "id": "env-001",
+    "name": "BOLSA POLIETILENO (NEGRA) 50X70",
+    "slug": "bolsa-negra-50x70",
+    "description": "Bolsa polietileno negra 50x70",
+    "weight": "1 KG",
+    "category": "Bolsa NEGRA",
+    "image": "/images/edited/2.JPG",
+    "price": null,
+    "stock": null,
+    "sku": null,
+    "featured": false
+  },
+  {
+    "id": "env-002",
+    "name": "BOLSA POLIETILENO (NEGRA) 60X90",
+    "slug": "bolsa-negra-60x90",
+    "description": "Bolsa polietileno negra 60x90",
+    "weight": "1 KG",
+    "category": "Bolsa NEGRA",
+    "image": "/images/edited/2.JPG",
+    "price": null,
+    "stock": null,
+    "sku": null,
+    "featured": false
+  },
+  {
+    "id": "env-003",
+    "name": "BOLSA POLIETILENO (NEGRA) 70+30X1.20",
+    "slug": "bolsa-negra-70-30x120",
+    "description": "Bolsa polietileno negra 70+30x1.20",
+    "weight": "1 KG",
+    "category": "Bolsa NEGRA",
+    "image": "/images/edited/2.JPG",
+    "price": null,
+    "stock": null,
+    "sku": null,
+    "featured": false
+  },
+  {
+    "id": "env-004",
+    "name": "BOLSA POLIETILENO (NEGRA) 70X90",
+    "slug": "bolsa-negra-70x90",
+    "description": "Bolsa polietileno negra 70x90",
+    "weight": "1 KG",
+    "category": "Bolsa NEGRA",
+    "image": "/images/edited/2.JPG",
+    "price": null,
+    "stock": null,
+    "sku": null,
+    "featured": false
+  }
+]

@@ -1,66 +1,62 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Image from 'next/image';
+import PageLayout from '@/components/PageLayout';
+import BottomCategories from '@/components/BottomCategories';
 
-export default function Home() {
+export const metadata = {
+  title: 'Desechables la Estrella - Inicio',
+  description: 'AUM Desechables la Estrella. Empresa líder en distribución de productos desechables desde 1988 en Guadalajara, Jalisco.',
+};
+
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <>
+      <PageLayout>
+        <p>
+          AUM Desechables la Estrella. Nace en Guadalajara el 12 de Diciembre de 1988,
+          fue creada con el propósito de satisfacer las necesidades de empaque del mercado
+          de Guadalajara Jalisco.
+        </p>
+        <p>
+          A lo largo de los años, la compañía ha representado de manera exclusiva las más
+          importantes fábricas mexicanas de este gremio y la distribucion de marcas lideres.
+          Con más de 20 años de experiencia, Desechables la Estrella se ha consolidado como
+          una empresa líder en la distribución y representación de productos desechables,
+          llegando a todas las ciudades y poblaciones que componen a nivel Nacional, ocupando
+          orgullosamente un lugar dentro de las 10 empresas más importantes y de Guadalajara.
+        </p>
+
+        <div className="vision-section">
+          <div className="vision-text">
+            <p className="titulo">VISION</p>
+            <p>
+              Ser líder en el mercado de productos desechables a Nivel Nacional, ofreciendo
+              y garantizando calidad en todos sus productos y servicios, generando resultados
+              óptimos que contribuyan al crecimiento de la organización.
+            </p>
+          </div>
+          <div className="vision-image">
             <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/images/fabrica.jpg"
+              alt="Fábrica Desechables la Estrella"
+              width={346}
+              height={141}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
-    </div>
+
+        <p className="titulo">MISION</p>
+        <p>
+          Nuestra razón de ser, es ofrecer productos desechables de la mejor calidad y al
+          mejor precio, brindando un servicio de calidad de clase mundial con el respaldo
+          de nuestras fabricas de producto.
+        </p>
+        <p>
+          Nuestra labor principal es satisfacer las necesidades del mercado, haciendo énfasis
+          en la logística y preparación de nuestro equipo para brindar un excelente servicio.
+        </p>
+      </PageLayout>
+
+      <BottomCategories />
+    </>
   );
 }

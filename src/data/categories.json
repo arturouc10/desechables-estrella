@@ -1,0 +1,34 @@
+[
+  {
+    "id": "aum",
+    "name": "Cubiertos Desechables AUM",
+    "slug": "aum",
+    "image": "/images/cubiertos.JPG",
+    "description": "Cubiertos desechables de la marca AUM",
+    "href": "/aum"
+  },
+  {
+    "id": "envases",
+    "name": "Envases y Bolsas Negras",
+    "slug": "envases",
+    "image": "/images/vasos.JPG",
+    "description": "Bolsas de polietileno negras para basura",
+    "href": "/envases"
+  },
+  {
+    "id": "ecobolsas",
+    "name": "Eco Bolsas",
+    "slug": "ecobolsas",
+    "image": "/images/bolsas.JPG",
+    "description": "Bolsas de polietileno de alta y baja densidad",
+    "href": "/ecobolsas"
+  },
+  {
+    "id": "bolsascamisa",
+    "name": "Bolsas Tipo Camiseta",
+    "slug": "bolsascamisa",
+    "image": "/images/bolsacamisa.JPG",
+    "description": "Bolsas tipo camiseta de alta densidad",
+    "href": "/bolsascamisa"
+  }
+]
