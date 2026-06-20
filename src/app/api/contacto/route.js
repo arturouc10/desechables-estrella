@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -31,15 +33,27 @@ export async function POST(request) {
     console.log('Fecha:', new Date().toISOString());
     console.log('================================');
 
-    // TODO: E-commerce - Add email sending service here
-    // Example with Resend:
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-    // await resend.emails.send({
-    //   from: 'contacto@desechableslaestrella.com',
-    //   to: 'desechables_laestrella@hotmail.com',
-    //   subject: 'DESECHABLES LA ESTRELLA - Nuevo mensaje de contacto',
-    //   html: `<p>Nombre: ${nombre}</p><p>Email: ${email}</p><p>Tel: ${tel}</p><p>Mensaje: ${comen}</p>`,
-    // });
+    // E-commerce - Sending email with Resend
+    const { data, error } = await resend.emails.send({
+      from: 'Desechables La Estrella <onboarding@resend.dev>', // Testing address until a custom domain is verified in Resend
+      to: 'oscarone2002@gmail.com', // MUST be the registered Resend email while using the testing domain
+      subject: 'DESECHABLES LA ESTRELLA - Nuevo mensaje de contacto',
+      html: `
+        <h2>Nuevo mensaje de contacto</h2>
+        <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Teléfono:</strong> ${tel}</p>
+        <p><strong>Mensaje:</strong><br/>${comen}</p>
+      `,
+    });
+
+    if (error) {
+      console.error('Resend Error:', error);
+      return NextResponse.json(
+        { error: 'Error enviando el correo' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       { message: 'Mensaje enviado exitosamente' },
