@@ -1,5 +1,5 @@
 import PageLayout from '@/components/PageLayout';
-import ProductTable from '@/components/ProductTable';
+import ProductCard from '@/components/ProductCard';
 import BottomCategories from '@/components/BottomCategories';
 import products from '@/data/products-aum.json';
 
@@ -12,9 +12,11 @@ export default function AumPage() {
   return (
     <>
       <PageLayout showRepublica>
-        {products.map((product) => (
-          <ProductTable key={product.id} product={product} />
-        ))}
+        <div className="product-grid">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </PageLayout>
 
       <BottomCategories />

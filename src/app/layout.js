@@ -1,6 +1,4 @@
 import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'Desechables la Estrella',
@@ -15,11 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body>
-        <div className="site-wrapper">
-          <Header />
-          {children}
-          <Footer />
-        </div>
+        {children}
       </body>
     </html>
   );
