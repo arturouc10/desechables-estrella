@@ -74,7 +74,7 @@ export default async function AdminProductosPage() {
                 <td>
                   <div className={styles.actions}>
                     {/* El botón de eliminar se implementará pronto */}
-                    <button className={styles.deleteBtn} onClick={() => alert('Función de eliminar próximamente')}>
+                    <button className={styles.deleteBtn} title="Función de eliminar próximamente">
                       🗑️
                     </button>
                   </div>

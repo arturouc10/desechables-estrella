@@ -23,26 +23,31 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="header-logo">
-        <Link href="/">
-          <Image
-            src="/images/logo.png"
-            alt="Desechables la Estrella - Logo"
-            width={205}
-            height={242}
-            priority
-          />
-        </Link>
-      </div>
-      <div className="header-nav-area">
-        <div className="header-brand">
-          <h1>
-            Desechables la <span>Estrella</span>
-          </h1>
-          <p>Distribuidores de productos desechables desde 1988</p>
+      <div className="header-top">
+        <div className="header-logo">
+          <Link href="/">
+            <Image
+              src="/images/logo.png"
+              alt="Desechables la Estrella - Logo"
+              width={150}
+              height={80}
+              priority
+            />
+          </Link>
+        </div>
+        
+        <div className="header-search">
+          <input type="text" placeholder="Buscar productos, marcas y más..." />
+          <button type="button">Buscar</button>
         </div>
 
-        {/* Hamburger button - visible only on mobile/tablet */}
+        <button className="header-cart" id="cart-button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Carrito <span className="cart-count">0</span>
+        </button>
+      </div>
+
+      <div className="header-nav-area">
         <button
           className={`hamburger-btn ${menuOpen ? 'active' : ''}`}
           onClick={toggleMenu}
@@ -70,14 +75,8 @@ export default function Header() {
             ))}
           </ul>
         </nav>
-
-        {/* E-commerce: Cart button (hidden until activated) */}
-        <button className="header-cart" id="cart-button">
-          🛒 Carrito <span className="cart-count">0</span>
-        </button>
       </div>
 
-      {/* Overlay to close menu when tapping outside */}
       {menuOpen && (
         <div
           className="mobile-nav-overlay active"
