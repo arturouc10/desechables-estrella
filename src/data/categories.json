@@ -8,12 +8,12 @@
     "href": "/aum"
   },
   {
-    "id": "envases",
-    "name": "Envases y Bolsas Negras",
-    "slug": "envases",
+    "id": "bolsanegra",
+    "name": "Bolsas Negras",
+    "slug": "bolsanegra",
     "image": "/images/vasos.JPG",
     "description": "Bolsas de polietileno negras para basura",
-    "href": "/envases"
+    "href": "/bolsanegra"
   },
   {
     "id": "ecobolsas",
