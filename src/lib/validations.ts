@@ -11,6 +11,7 @@ export const ProductSchema = z.object({
   stock: z.number().int({ message: 'El stock debe ser un número entero' }).min(0).optional().nullable(),
   sku: z.string().optional().nullable(),
   image: z.string().url({ message: 'La URL de la imagen no es válida' }).optional().nullable(),
+  images: z.array(z.string().url({ message: 'URL de imagen inválida' })).optional().default([]),
 });
 
 export type ProductInput = z.infer<typeof ProductSchema>;

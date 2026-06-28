@@ -23,31 +23,26 @@ export default function ProductTable({ product }: ProductTableProps) {
           height={86}
         />
       </div>
-      <div className="product-item-table">
-        <table className="product-table">
-          <thead>
-            <tr>
-              <th style={{ width: '250px' }}>Descripción</th>
-              <th>Peso/Cantidad</th>
-              <th>Categoría</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{product.name}</td>
-              <td>{product.weight}</td>
-              <td>{product.category}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        {/* E-commerce: Price display (hidden until activated via CSS) */}
-        {product.price && (
-          <div className="product-card-price">
-            ${product.price} MXN
-          </div>
-        )}
+      <div className="product-item-details">
+        <div className="product-item-info">
+          <h3 className="product-item-name">{product.name}</h3>
+          <span className="product-item-category">{product.category}</span>
+          <span className="product-item-weight">{product.weight}</span>
+        </div>
+        
+        <div className="product-item-actions">
+          {/* E-commerce: Price and Add to cart */}
+          {product.price && (
+            <div className="product-item-price">
+              ${product.price} MXN
+            </div>
+          )}
+          <button className="product-item-add-to-cart" id={`add-to-cart-list-${product.id}`}>
+            Agregar
+          </button>
+        </div>
       </div>
+
     </div>
   );
 }

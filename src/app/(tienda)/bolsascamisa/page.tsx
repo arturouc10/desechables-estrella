@@ -1,6 +1,5 @@
 import PageLayout from '@/components/PageLayout';
 import ProductCard from '@/components/ProductCard';
-import BottomCategories from '@/components/BottomCategories';
 import products from '@/data/products-camisa.json';
 import type { StaticProduct } from '@/types';
 
@@ -11,7 +10,6 @@ export const metadata = {
 
 export default function BolsasCamisaPage() {
   return (
-    <>
       <PageLayout showRepublica>
         <div className="product-grid">
           {(products as StaticProduct[]).map((product) => (
@@ -19,8 +17,5 @@ export default function BolsasCamisaPage() {
           ))}
         </div>
       </PageLayout>
-
-      <BottomCategories />
-    </>
   );
 }

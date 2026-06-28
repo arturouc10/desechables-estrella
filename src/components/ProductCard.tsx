@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Product } from '@/types';
 
 interface ProductCardProps {
@@ -15,13 +16,15 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="product-card" id={`product-${product.id}`}>
-      <Image
-        className="product-card-image"
-        src={product.image || '/images/placeholder.jpg'}
-        alt={product.name}
-        width={200}
-        height={120}
-      />
+      <Link href={`/productos/${product.id}`} className="product-card-image-link">
+        <Image
+          className="product-card-image"
+          src={product.image || '/images/placeholder.jpg'}
+          alt={product.name}
+          width={200}
+          height={120}
+        />
+      </Link>
       <div className="product-card-body">
         <div className="product-card-name">{product.name}</div>
         <div className="product-card-weight">{product.weight}</div>
@@ -33,9 +36,14 @@ export default function ProductCard({ product }: ProductCardProps) {
             ${product.price} MXN
           </div>
         )}
-        <button className="product-card-add-to-cart" id={`add-to-cart-${product.id}`}>
-          Agregar al carrito
-        </button>
+        <div className="product-card-buttons">
+          <Link href={`/productos/${product.id}`} className="product-card-details-btn">
+            Ver detalles
+          </Link>
+          <button className="product-card-add-to-cart" id={`add-to-cart-${product.id}`}>
+            Agregar al carrito
+          </button>
+        </div>
       </div>
     </div>
   );

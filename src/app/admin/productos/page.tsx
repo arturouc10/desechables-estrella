@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import styles from '../admin.module.css';
 import type { Product } from '@/types';
+import categoriesData from '@/data/categories.json';
+import AdminProductFilter from '@/components/AdminProductFilter';
 
 export const revalidate = 0; // Evitar caché estático para ver productos nuevos al instante
 
@@ -33,54 +35,13 @@ export default async function AdminProductosPage() {
         </div>
       )}
 
-      <div className={styles.tableContainer}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Imagen</th>
-              <th>Nombre</th>
-              <th>Categoría</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.length === 0 && !dbError && (
-              <tr>
-                <td colSpan={6} style={{ textAlign: 'center', color: '#94a3b8', padding: '3rem' }}>
-                  Aún no tienes productos. ¡Añade el primero!
-                </td>
-              </tr>
-            )}
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>
-                  {product.image ? (
-                    <img src={product.image} alt={product.name} className={styles.productThumb} />
-                  ) : (
-                    <div className={styles.productThumb} style={{ background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      📸
-                    </div>
-                  )}
-                </td>
-                <td style={{ fontWeight: '600' }}>{product.name}</td>
-                <td><span style={{ background: 'rgba(56, 189, 248, 0.1)', color: '#38bdf8', padding: '0.25rem 0.75rem', borderRadius: '1rem', fontSize: '0.85rem' }}>{product.category}</span></td>
-                <td>{product.price ? `$${product.price.toFixed(2)}` : '-'}</td>
-                <td>{product.stock !== null ? product.stock : '-'}</td>
-                <td>
-                  <div className={styles.actions}>
-                    {/* El botón de eliminar se implementará pronto */}
-                    <button className={styles.deleteBtn} title="Función de eliminar próximamente" disabled>
-                      🗑️
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {products.length === 0 && !dbError ? (
+        <div style={{ textAlign: 'center', color: '#666', padding: '3rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+          Aún no tienes productos. ¡Añade el primero!
+        </div>
+      ) : (
+        !dbError && <AdminProductFilter products={products} categoriesData={categoriesData} />
+      )}
     </div>
   );
 }

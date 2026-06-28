@@ -22,6 +22,7 @@ export interface ProductFormData {
   stock?: number | null;
   sku?: string;
   image?: string | null;
+  images?: string[];
 }
 
 // Category item from categories.json
