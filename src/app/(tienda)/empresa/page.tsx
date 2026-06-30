@@ -1,27 +1,27 @@
 import PageLayout from '@/components/PageLayout';
-import Lightbox from '@/components/Lightbox';
-import BottomCategories from '@/components/BottomCategories';
+import Carousel from '@/components/Carousel';
 
 export const metadata = {
   title: 'Desechables la Estrella - Empresa',
   description: 'Conoce Desechables la Estrella, empresa 100% mexicana fundada en 1988, líder fabricante y distribuidor de desechables y bolsas ecológicas.',
 };
 
-const fabricaImages: string[] = [
-  '/images/fab/1.jpg',
-  '/images/fab/2.jpg',
-  '/images/fab/3.jpg',
-  '/images/fab/4.jpg',
-  '/images/fab/5.jpg',
-  '/images/fab/6.jpg',
-  '/images/fab/7.jpg',
-  '/images/fab/8.jpg',
+// Generar array con todas las imágenes
+const allImages: string[] = [
+  ...Array.from({ length: 8 }, (_, i) => `/images/fab/${i + 1}.jpg`),
+  ...Array.from({ length: 9 }, (_, i) => `/images/empresa/${i + 1}.jpg`)
 ];
 
 export default function EmpresaPage() {
   return (
-    <>
-      <PageLayout>
+    <PageLayout>
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <h1 className="titulo" style={{ fontSize: '32px', marginBottom: '1rem' }}>Sobre Nosotros</h1>
+      </div>
+
+      <Carousel images={allImages} autoPlayInterval={4000} />
+
+      <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', fontSize: '18px' }}>
         <p>
           Desechables la Estrella, es una empresa 100% mexicana fundada en el año de 1988,
           que se mantiene como líder fabricante y distribuidor de desechables y bolsas ecologicas.
@@ -32,11 +32,7 @@ export default function EmpresaPage() {
           (marcas registradas). Llegamos a toda la Republica Mexicana atendiendo altos volumenes
           de consumo y cumpliendo los mas altos estandares de calidad.
         </p>
-
-        <Lightbox images={fabricaImages} />
-      </PageLayout>
-
-      <BottomCategories />
-    </>
+      </div>
+    </PageLayout>
   );
 }

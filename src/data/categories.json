@@ -1,34 +1,55 @@
 [
   {
     "id": "aum",
-    "name": "Cubiertos Desechables AUM",
+    "name": "Cubiertos AUM",
     "slug": "aum",
+    "section": "Cubiertos",
     "image": "/images/cubiertos.JPG",
     "description": "Cubiertos desechables de la marca AUM",
-    "href": "/aum"
+    "href": "/aum",
+    "aliases": [
+      "cubiertos"
+    ]
   },
   {
     "id": "bolsanegra",
-    "name": "Bolsas Negras",
+    "name": "Bolsa Negra",
     "slug": "bolsanegra",
+    "section": "Bolsas",
     "image": "/images/vasos.JPG",
     "description": "Bolsas de polietileno negras para basura",
-    "href": "/bolsanegra"
+    "href": "/bolsanegra",
+    "aliases": [
+      "negras",
+      "negra",
+      "basura"
+    ]
   },
   {
     "id": "ecobolsas",
-    "name": "Eco Bolsas",
+    "name": "Ecobolsa",
     "slug": "ecobolsas",
+    "section": "Bolsas",
     "image": "/images/bolsas.JPG",
     "description": "Bolsas de polietileno de alta y baja densidad",
-    "href": "/ecobolsas"
+    "href": "/ecobolsas",
+    "aliases": [
+      "alta densidad",
+      "baja densidad",
+      "polietileno"
+    ]
   },
   {
     "id": "bolsascamisa",
-    "name": "Bolsas Tipo Camiseta",
+    "name": "Bolsa Camiseta",
     "slug": "bolsascamisa",
+    "section": "Bolsas",
     "image": "/images/bolsacamisa.JPG",
     "description": "Bolsas tipo camiseta de alta densidad",
-    "href": "/bolsascamisa"
+    "href": "/bolsascamisa",
+    "aliases": [
+      "camiseta",
+      "bolsacamisa"
+    ]
   }
 ]

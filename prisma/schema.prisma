@@ -20,6 +20,7 @@ model Product {
   weight      String?
   category    String
   image       String?
+  images      String[] @default([])
   price       Float?
   stock       Int?
   sku         String?

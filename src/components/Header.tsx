@@ -16,7 +16,6 @@ const navItems: NavItem[] = [
   { href: '/productos', label: 'Productos' },
   { href: '/ubicacion', label: 'Ubicación' },
   { href: '/contacto', label: 'Contacto' },
-  { href: '/distribuidores', label: 'Distribuidores' },
 ];
 
 export default function Header() {
@@ -28,42 +27,61 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="header-top">
-        <div className="header-logo">
-          <Link href="/">
-            <Image
-              src="/images/logo.png"
-              alt="Desechables la Estrella - Logo"
-              width={150}
-              height={80}
-              priority
-            />
+      <div className="header-container">
+        {/* Left: Logo and Brand */}
+        <div className="header-left">
+          <Link href="/" className="header-logo-link">
+            <div className="header-logo">
+              <Image
+                src="/images/logo.png"
+                alt="Desechables la Estrella - Logo"
+                width={70}
+                height={83}
+                priority
+              />
+            </div>
+            <div className="header-brand">
+              <h1>
+                Desechables la <span>Estrella</span>
+              </h1>
+            </div>
           </Link>
         </div>
-        
-        <div className="header-search">
-          <input type="text" placeholder="Buscar productos, marcas y más..." />
-          <button type="button">Buscar</button>
+
+        {/* Center: Search Bar (Simulated) */}
+        <div className="header-center">
+          {pathname.startsWith('/productos') && (
+            <div className="search-bar">
+              <input type="text" placeholder="Buscar productos..." />
+              <button aria-label="Buscar" className="search-button">
+                🔍
+              </button>
+            </div>
+          )}
         </div>
 
-        <button className="header-cart" id="cart-button">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-          Carrito <span className="cart-count">0</span>
-        </button>
+        {/* Right: Cart and Hamburger */}
+        <div className="header-right">
+          <button className="header-cart" id="cart-button">
+            🛒 Mi Carrito <span className="cart-count">0</span>
+          </button>
+
+          {/* Hamburger button - visible only on mobile/tablet */}
+          <button
+            className={`hamburger-btn ${menuOpen ? 'active' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Abrir menú de navegación"
+            id="hamburger-menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
 
+      {/* Navigation (Bottom part of header or off-canvas) */}
       <div className="header-nav-area">
-        <button
-          className={`hamburger-btn ${menuOpen ? 'active' : ''}`}
-          onClick={toggleMenu}
-          aria-label="Abrir menú de navegación"
-          id="hamburger-menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
         <nav className={`main-nav ${menuOpen ? 'open' : ''}`} id="main-navigation">
           <ul>
             {navItems.map((item) => (
@@ -82,6 +100,7 @@ export default function Header() {
         </nav>
       </div>
 
+      {/* Overlay to close menu when tapping outside */}
       {menuOpen && (
         <div
           className="mobile-nav-overlay active"
