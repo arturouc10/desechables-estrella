@@ -31,10 +31,23 @@ export default function NuevoProductoPage() {
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
-    if (selectedFiles.length > 0) {
-      setFiles(prev => [...prev, ...selectedFiles]);
-      
-      const newPreviews = selectedFiles.map(file => URL.createObjectURL(file));
+    const validFiles: File[] = [];
+    
+    for (const file of selectedFiles) {
+      if (!file.type.startsWith('image/')) {
+        alert(`El archivo ${file.name} no es una imagen válida.`);
+        continue;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert(`La imagen ${file.name} supera el límite de 5MB.`);
+        continue;
+      }
+      validFiles.push(file);
+    }
+
+    if (validFiles.length > 0) {
+      setFiles(prev => [...prev, ...validFiles]);
+      const newPreviews = validFiles.map(file => URL.createObjectURL(file));
       setPreviews(prev => [...prev, ...newPreviews]);
     }
   };
@@ -99,7 +112,6 @@ export default function NuevoProductoPage() {
         price: formData.price ? parseFloat(formData.price as unknown as string) : null,
         stock: formData.stock ? parseInt(formData.stock as unknown as string) : null,
         image: uploadedUrls[0] || null,
-        images: uploadedUrls,
       };
 
       const res = await fetch('/api/productos', {

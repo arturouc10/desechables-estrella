@@ -1,7 +1,8 @@
 'use client';
-
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import ProductCard from './ProductCard';
+import { siteConfig } from '@/lib/config';
 import type { Product } from '@/types';
 
 interface ProductCatalogProps {
@@ -15,6 +16,8 @@ export default function ProductCatalog({ products, categories }: ProductCatalogP
   const [maxPrice, setMaxPrice] = useState<string>('');
   const [sortBy, setSortBy] = useState<'default' | 'price_asc' | 'price_desc'>('default');
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('q') || '';
 
   const toggleCategory = (slug: string) => {
     setSelectedCategories((prev) =>
@@ -24,6 +27,17 @@ export default function ProductCatalog({ products, categories }: ProductCatalogP
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
+
+    // Filter by Search Query
+    if (query) {
+      const q = query.toLowerCase();
+      result = result.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          (p.description && p.description.toLowerCase().includes(q)) ||
+          (p.sku && p.sku.toLowerCase().includes(q))
+      );
+    }
 
     // Filter by Category
     if (selectedCategories.length > 0) {
@@ -71,7 +85,7 @@ export default function ProductCatalog({ products, categories }: ProductCatalogP
     }
 
     return result;
-  }, [products, selectedCategories, minPrice, maxPrice, sortBy]);
+  }, [products, selectedCategories, minPrice, maxPrice, sortBy, query]);
 
   return (
     <div className="catalog-container">
@@ -110,32 +124,34 @@ export default function ProductCatalog({ products, categories }: ProductCatalogP
             </div>
           </div>
 
-          <div className="filter-group">
-            <h3>Precio</h3>
-            <div className="price-inputs">
-              <div className="input-wrap">
-                <span>$</span>
-                <input
-                  type="number"
-                  placeholder="Min"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(e.target.value)}
-                  min="0"
-                />
-              </div>
-              <span className="separator">-</span>
-              <div className="input-wrap">
-                <span>$</span>
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(e.target.value)}
-                  min="0"
-                />
+          {siteConfig.isEcommerceEnabled && (
+            <div className="filter-group">
+              <h3>Precio</h3>
+              <div className="price-inputs">
+                <div className="input-wrap">
+                  <span>$</span>
+                  <input
+                    type="number"
+                    placeholder="Min"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
+                    min="0"
+                  />
+                </div>
+                <span className="separator">-</span>
+                <div className="input-wrap">
+                  <span>$</span>
+                  <input
+                    type="number"
+                    placeholder="Max"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                    min="0"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div className="filter-group">
             <h3>Ordenar por</h3>
@@ -145,8 +161,12 @@ export default function ProductCatalog({ products, categories }: ProductCatalogP
               className="sort-select"
             >
               <option value="default">Relevancia</option>
-              <option value="price_asc">Menor precio</option>
-              <option value="price_desc">Mayor precio</option>
+              {siteConfig.isEcommerceEnabled && (
+                <>
+                  <option value="price_asc">Menor precio</option>
+                  <option value="price_desc">Mayor precio</option>
+                </>
+              )}
             </select>
           </div>
           

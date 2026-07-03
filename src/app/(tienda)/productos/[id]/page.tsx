@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PageLayout from '@/components/PageLayout';
 import ProductCard from '@/components/ProductCard';
 import ProductGallery from '@/components/ProductGallery';
+import AddToCartButton from '@/components/AddToCartButton';
 import { prisma } from '@/lib/prisma';
 import { Metadata } from 'next';
 
@@ -49,9 +50,7 @@ export default async function ProductDetailsPage({ params }: ProductPageProps) {
     take: 4
   });
 
-  const productImages = product.images && product.images.length > 0 
-    ? product.images 
-    : [product.image || '/images/placeholder.jpg'];
+  const productImages = [product.image || '/images/placeholder.jpg'];
 
   return (
     <PageLayout>
@@ -101,9 +100,7 @@ export default async function ProductDetailsPage({ params }: ProductPageProps) {
           </div>
           
           <div className="product-details-actions">
-            <button className="product-details-add-to-cart" id={`add-to-cart-detail-${product.id}`}>
-              Agregar al carrito
-            </button>
+            <AddToCartButton product={product} />
           </div>
         </div>
       </div>

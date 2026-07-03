@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function BolsasCamisaPage() {
   return (
-      <PageLayout showRepublica>
+      <PageLayout>
         <div className="product-grid">
           {(products as StaticProduct[]).map((product) => (
             <ProductCard key={product.id} product={product} />

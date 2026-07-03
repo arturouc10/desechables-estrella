@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { siteConfig } from '@/lib/config';
 import type { Product } from '@/types';
+import AddToCartButton from './AddToCartButton';
 
 interface ProductCardProps {
   product: Product | {
@@ -30,8 +32,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="product-card-weight">{product.weight}</div>
         <div className="product-card-category">{product.category}</div>
 
-        {/* E-commerce fields - hidden via CSS until activated */}
-        {product.price && (
+        {/* E-commerce fields - conditionally rendered */}
+        {siteConfig.isEcommerceEnabled && product.price && (
           <div className="product-card-price">
             ${product.price} MXN
           </div>
@@ -40,9 +42,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           <Link href={`/productos/${product.id}`} className="product-card-details-btn">
             Ver detalles
           </Link>
-          <button className="product-card-add-to-cart" id={`add-to-cart-${product.id}`}>
-            Agregar al carrito
-          </button>
+          {siteConfig.isEcommerceEnabled && (
+            <AddToCartButton product={product} />
+          )}
         </div>
       </div>
     </div>

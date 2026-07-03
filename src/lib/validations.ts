@@ -16,6 +16,10 @@ export const ProductSchema = z.object({
 
 export type ProductInput = z.infer<typeof ProductSchema>;
 
+// Schema for updating a product via API (all fields optional)
+export const ProductUpdateSchema = ProductSchema.partial();
+export type ProductUpdateInput = z.infer<typeof ProductUpdateSchema>;
+
 // Schema for the contact form
 export const ContactSchema = z.object({
   nombre: z.string().min(1, { message: 'El nombre es requerido' }),

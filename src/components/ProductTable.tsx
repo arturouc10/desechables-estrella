@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { Product } from '@/types';
+import { siteConfig } from '@/lib/config';
 
 interface ProductTableProps {
   product: Product | {
@@ -32,14 +33,16 @@ export default function ProductTable({ product }: ProductTableProps) {
         
         <div className="product-item-actions">
           {/* E-commerce: Price and Add to cart */}
-          {product.price && (
+          {siteConfig.isEcommerceEnabled && product.price && (
             <div className="product-item-price">
               ${product.price} MXN
             </div>
           )}
-          <button className="product-item-add-to-cart" id={`add-to-cart-list-${product.id}`}>
-            Agregar
-          </button>
+          {siteConfig.isEcommerceEnabled && (
+            <button className="product-item-add-to-cart" id={`add-to-cart-list-${product.id}`}>
+              Agregar
+            </button>
+          )}
         </div>
       </div>
 

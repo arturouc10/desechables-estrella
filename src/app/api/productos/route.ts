@@ -63,7 +63,6 @@ export async function POST(request: Request) {
         stock: data.stock ?? null,
         sku: data.sku ?? null,
         image: data.image ?? null,
-        images: data.images ?? [],
       }
     });
 

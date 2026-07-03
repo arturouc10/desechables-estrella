@@ -1,9 +1,40 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { Suspense, useState } from 'react';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { siteConfig } from '@/lib/config';
+import { useCart } from '@/context/CartContext';
+
+function SearchInput() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams?.get('q') || '');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/productos?q=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      router.push('/productos');
+    }
+  };
+
+  return (
+    <form className="search-bar" onSubmit={handleSearch}>
+      <input 
+        type="text" 
+        placeholder="Buscar productos..." 
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <button type="submit" aria-label="Buscar" className="search-button">
+        🔍
+      </button>
+    </form>
+  );
+}
 
 interface NavItem {
   href: string;
@@ -21,6 +52,7 @@ const navItems: NavItem[] = [
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { getCartCount } = useCart();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
@@ -48,23 +80,22 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Center: Search Bar (Simulated) */}
+        {/* Center: Search Bar */}
         <div className="header-center">
           {pathname.startsWith('/productos') && (
-            <div className="search-bar">
-              <input type="text" placeholder="Buscar productos..." />
-              <button aria-label="Buscar" className="search-button">
-                🔍
-              </button>
-            </div>
+            <Suspense fallback={<div className="search-bar"><input type="text" placeholder="Buscar productos..." readOnly /><button className="search-button">Buscar</button></div>}>
+              <SearchInput />
+            </Suspense>
           )}
         </div>
 
         {/* Right: Cart and Hamburger */}
         <div className="header-right">
-          <button className="header-cart" id="cart-button">
-            🛒 Mi Carrito <span className="cart-count">0</span>
-          </button>
+          {siteConfig.isEcommerceEnabled && (
+            <Link href="/pedido" className="header-cart" id="cart-button" style={{ textDecoration: 'none' }}>
+              🛒 Mi Pedido <span className="cart-count">{getCartCount()}</span>
+            </Link>
+          )}
 
           {/* Hamburger button - visible only on mobile/tablet */}
           <button

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifySession } from '@/lib/session';
+import { ProductUpdateSchema } from '@/lib/validations';
 
 export async function PUT(
   request: Request,
@@ -16,6 +17,16 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
 
+    // ✅ Validate with Zod
+    const parsed = ProductUpdateSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: 'Datos inválidos', details: parsed.error.flatten().fieldErrors },
+        { status: 400 }
+      );
+    }
+    const data = parsed.data;
+
     const existing = await prisma.product.findUnique({ where: { id } });
     if (!existing) {
       return NextResponse.json({ error: 'Producto no encontrado' }, { status: 404 });
@@ -24,17 +35,15 @@ export async function PUT(
     const updatedProduct = await prisma.product.update({
       where: { id },
       data: {
-        name: body.name ?? existing.name,
-        slug: body.slug ?? existing.slug,
-        description: body.description ?? existing.description,
-        price: body.price !== undefined ? body.price : existing.price,
-        category: body.category ?? existing.category,
-        weight: body.weight !== undefined ? body.weight : existing.weight,
-        stock: body.stock !== undefined ? body.stock : existing.stock,
-        sku: body.sku !== undefined ? body.sku : existing.sku,
-        image: body.image !== undefined ? body.image : existing.image,
-        images: body.images !== undefined ? body.images : existing.images,
-        featured: body.featured ?? existing.featured
+        name: data.name ?? existing.name,
+        slug: data.slug ?? existing.slug,
+        description: data.description ?? existing.description,
+        price: data.price !== undefined ? data.price : existing.price,
+        category: data.category ?? existing.category,
+        weight: data.weight !== undefined ? data.weight : existing.weight,
+        stock: data.stock !== undefined ? data.stock : existing.stock,
+        sku: data.sku !== undefined ? data.sku : existing.sku,
+        image: data.image !== undefined ? data.image : existing.image,
       }
     });
 

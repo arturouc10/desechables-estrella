@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../app/admin/admin.module.css';
@@ -23,7 +22,7 @@ export default function EditProductClient({ product }: EditProductClientProps) {
     sku: product.sku || '',
   });
   const [existingImages, setExistingImages] = useState<string[]>(
-    product.images?.length ? product.images : (product.image ? [product.image] : [])
+    product.image ? [product.image] : []
   );
   const [newFiles, setNewFiles] = useState<File[]>([]);
   const [newPreviews, setNewPreviews] = useState<string[]>([]);
@@ -37,11 +36,24 @@ export default function EditProductClient({ product }: EditProductClientProps) {
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
-    if (selectedFiles.length > 0) {
-      setNewFiles(prev => [...prev, ...selectedFiles]);
-      
-      const previews = selectedFiles.map(file => URL.createObjectURL(file));
-      setNewPreviews(prev => [...prev, ...previews]);
+    const validFiles: File[] = [];
+    
+    for (const file of selectedFiles) {
+      if (!file.type.startsWith('image/')) {
+        alert(`El archivo ${file.name} no es una imagen válida.`);
+        continue;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert(`La imagen ${file.name} supera el límite de 5MB.`);
+        continue;
+      }
+      validFiles.push(file);
+    }
+
+    if (validFiles.length > 0) {
+      setNewFiles(prev => [...prev, ...validFiles]);
+      const newPreviewsList = validFiles.map(file => URL.createObjectURL(file));
+      setNewPreviews(prev => [...prev, ...newPreviewsList]);
     }
   };
 
@@ -90,7 +102,6 @@ export default function EditProductClient({ product }: EditProductClientProps) {
         price: formData.price ? parseFloat(formData.price as unknown as string) : null,
         stock: formData.stock ? parseInt(formData.stock as unknown as string, 10) : null,
         image: allImages[0] || null,
-        images: allImages,
       };
 
       const res = await fetch(`/api/productos/${product.id}`, {
@@ -244,7 +255,7 @@ export default function EditProductClient({ product }: EditProductClientProps) {
           <button type="button" onClick={() => router.push('/admin/productos')} className={styles.secondaryButton} disabled={loading} style={{ flex: 1, padding: '1rem', borderRadius: '0.5rem', border: '1px solid #e5e7eb', background: '#f9fafb', color: '#374151', fontWeight: 'bold', cursor: 'pointer' }}>
             Cancelar
           </button>
-          <button type="submit" className={styles.primaryButton} disabled={loading} style={{ flex: 2 }}>
+          <button type="submit" className={styles.primaryButton} disabled={loading} style={{ width: '100%', marginTop: '1rem' }}>
             {loading ? <div className={styles.loader}></div> : '💾 Guardar Cambios'}
           </button>
         </div>
