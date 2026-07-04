@@ -1,6 +1,5 @@
 import PageLayout from '@/components/PageLayout';
 import ProductCard from '@/components/ProductCard';
-import BottomCategories from '@/components/BottomCategories';
 import products from '@/data/products-envases.json';
 import type { StaticProduct } from '@/types';
 
@@ -11,16 +10,12 @@ export const metadata = {
 
 export default function BolsasBasuraPage() {
   return (
-    <>
-      <PageLayout showRepublica>
+      <PageLayout>
         <div className="product-grid">
           {(products as StaticProduct[]).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </PageLayout>
-
-      <BottomCategories />
-    </>
   );
 }

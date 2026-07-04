@@ -21,19 +21,20 @@ export default function BannerSlider() {
   }, []);
 
   return (
-    <div className="banner-slider">
+    <div className="hero-slider">
       {bannerImages.map((src, index) => (
-        <Image
-          key={src}
-          src={src}
-          alt={`Banner ${index + 1}`}
-          width={205}
-          height={383}
-          className={index === currentIndex ? 'active' : ''}
-          priority={index === 0}
-        />
+        <div key={src} className={`hero-slide ${index === currentIndex ? 'active' : ''}`}>
+          <Image
+            src={src}
+            alt={`Banner ${index + 1}`}
+            fill
+            className="hero-image"
+            priority={index === 0}
+          />
+          {/* Optional: Add an overlay or text content over the hero image here later */}
+        </div>
       ))}
-      <div className="banner-slider-dots">
+      <div className="hero-slider-dots">
         {bannerImages.map((_, index) => (
           <button
             key={index}

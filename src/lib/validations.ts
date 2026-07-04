@@ -11,9 +11,14 @@ export const ProductSchema = z.object({
   stock: z.number().int({ message: 'El stock debe ser un número entero' }).min(0).optional().nullable(),
   sku: z.string().optional().nullable(),
   image: z.string().url({ message: 'La URL de la imagen no es válida' }).optional().nullable(),
+  images: z.array(z.string().url({ message: 'URL de imagen inválida' })).optional().default([]),
 });
 
 export type ProductInput = z.infer<typeof ProductSchema>;
+
+// Schema for updating a product via API (all fields optional)
+export const ProductUpdateSchema = ProductSchema.partial();
+export type ProductUpdateInput = z.infer<typeof ProductUpdateSchema>;
 
 // Schema for the contact form
 export const ContactSchema = z.object({

@@ -17,6 +17,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No se proporcionó ningún archivo" }, { status: 400 });
     }
 
+    // Security: Validate File Type
+    if (!file.type.startsWith('image/')) {
+      return NextResponse.json({ error: "Solo se permiten imágenes (JPEG, PNG, WEBP, etc.)" }, { status: 400 });
+    }
+
+    // Security: Validate File Size (Max 5MB)
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json({ error: "La imagen excede el límite de 5MB" }, { status: 400 });
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 

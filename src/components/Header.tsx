@@ -1,9 +1,40 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { Suspense, useState } from 'react';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { siteConfig } from '@/lib/config';
+import { useCart } from '@/context/CartContext';
+
+function SearchInput() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams?.get('q') || '');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/productos?q=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      router.push('/productos');
+    }
+  };
+
+  return (
+    <form className="search-bar" onSubmit={handleSearch}>
+      <input 
+        type="text" 
+        placeholder="Buscar productos..." 
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <button type="submit" aria-label="Buscar" className="search-button">
+        🔍
+      </button>
+    </form>
+  );
+}
 
 interface NavItem {
   href: string;
@@ -16,49 +47,72 @@ const navItems: NavItem[] = [
   { href: '/productos', label: 'Productos' },
   { href: '/ubicacion', label: 'Ubicación' },
   { href: '/contacto', label: 'Contacto' },
-  { href: '/distribuidores', label: 'Distribuidores' },
 ];
 
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { getCartCount } = useCart();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <header className="header">
-      <div className="header-logo">
-        <Link href="/">
-          <Image
-            src="/images/logo.png"
-            alt="Desechables la Estrella - Logo"
-            width={205}
-            height={242}
-            priority
-          />
-        </Link>
-      </div>
-      <div className="header-nav-area">
-        <div className="header-brand">
-          <h1>
-            Desechables la <span>Estrella</span>
-          </h1>
-          <p>Distribuidores de productos desechables desde 1988</p>
+      <div className="header-container">
+        {/* Left: Logo and Brand */}
+        <div className="header-left">
+          <Link href="/" className="header-logo-link">
+            <div className="header-logo">
+              <Image
+                src="/images/logo.png"
+                alt="Desechables la Estrella - Logo"
+                width={70}
+                height={83}
+                priority
+              />
+            </div>
+            <div className="header-brand">
+              <h1>
+                Desechables la <span>Estrella</span>
+              </h1>
+            </div>
+          </Link>
         </div>
 
-        {/* Hamburger button - visible only on mobile/tablet */}
-        <button
-          className={`hamburger-btn ${menuOpen ? 'active' : ''}`}
-          onClick={toggleMenu}
-          aria-label="Abrir menú de navegación"
-          id="hamburger-menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        {/* Center: Search Bar */}
+        <div className="header-center">
+          {pathname.startsWith('/productos') && (
+            <Suspense fallback={<div className="search-bar"><input type="text" placeholder="Buscar productos..." readOnly /><button className="search-button">Buscar</button></div>}>
+              <SearchInput />
+            </Suspense>
+          )}
+        </div>
 
+        {/* Right: Cart and Hamburger */}
+        <div className="header-right">
+          {siteConfig.isEcommerceEnabled && (
+            <Link href="/pedido" className="header-cart" id="cart-button" style={{ textDecoration: 'none' }}>
+              🛒 Mi Pedido <span className="cart-count">{getCartCount()}</span>
+            </Link>
+          )}
+
+          {/* Hamburger button - visible only on mobile/tablet */}
+          <button
+            className={`hamburger-btn ${menuOpen ? 'active' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Abrir menú de navegación"
+            id="hamburger-menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+
+      {/* Navigation (Bottom part of header or off-canvas) */}
+      <div className="header-nav-area">
         <nav className={`main-nav ${menuOpen ? 'open' : ''}`} id="main-navigation">
           <ul>
             {navItems.map((item) => (
@@ -75,11 +129,6 @@ export default function Header() {
             ))}
           </ul>
         </nav>
-
-        {/* E-commerce: Cart button (hidden until activated) */}
-        <button className="header-cart" id="cart-button">
-          🛒 Carrito <span className="cart-count">0</span>
-        </button>
       </div>
 
       {/* Overlay to close menu when tapping outside */}

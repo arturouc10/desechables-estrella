@@ -10,11 +10,15 @@ export const metadata = {
   },
 };
 
+import { CartProvider } from '@/context/CartContext';
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <body>
-        {children}
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
