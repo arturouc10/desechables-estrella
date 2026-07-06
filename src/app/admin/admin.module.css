@@ -69,6 +69,51 @@
   border-left-color: #eb2c29;
 }
 
+.sidebarSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarSectionHeader {
+  color: rgba(255, 255, 255, 0.9);
+  padding: 1rem 1.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.sidebarSectionHeader:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebarSectionHeader span:last-child {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.sidebarSubMenu {
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+}
+
+.sidebarSubMenu .navLink {
+  padding: 0.5rem 1.5rem 0.5rem 2.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+}
+
+.sidebarSubMenu .navLink:hover {
+  border-left-color: #eb2c29;
+}
+
 /* ===== MAIN CONTENT ===== */
 .mainContent {
   flex: 1;

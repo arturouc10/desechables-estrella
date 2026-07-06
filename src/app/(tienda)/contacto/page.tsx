@@ -15,7 +15,11 @@ export default function ContactoPage() {
   const [status, setStatus] = useState<'success' | 'error' | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    let { name, value } = e.target;
+    if (name === 'tel') {
+      value = value.replace(/\D/g, ''); // Remueve cualquier caracter que no sea número
+    }
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -88,22 +92,34 @@ export default function ContactoPage() {
           <div style={{ background: '#f8fafc', padding: '2rem', borderRadius: '1rem', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div>
               <h3 style={{ fontSize: '1.3rem', color: '#173c66', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                📍 Dirección
+                Dirección
               </h3>
-              <a href="https://maps.app.goo.gl/FvGz7ZaxvvQYnoJ18" target="_blank"><p style={{ color: '#4b5563', lineHeight: '1.5' }}>
-                Calle Abeja 1142<br />
-                Mercado de Abastos<br />
-                Guadalajara, Jalisco C.P. 44530
-              </p></a>
+              <a href="https://maps.app.goo.gl/FvGz7ZaxvvQYnoJ18" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                <p style={{ color: '#4b5563', lineHeight: '1.5', marginBottom: '1rem' }}>
+                  Calle Abeja 1142<br />
+                  Mercado de Abastos<br />
+                  Guadalajara, Jalisco C.P. 44530
+                </p>
+              </a>
+              <p style={{ color: '#4b5563', marginBottom: '1rem', lineHeight: '1.5' }}>
+                <strong>Horario:</strong> Lunes a Viernes de 8:00 am a 6:00 pm<br />Sábados de 8:00 am a 2:00 pm
+              </p>
+              <a
+                href="https://maps.google.com.mx/maps?f=q&source=embed&hl=es&geocode=&q=Abeja+1142,+Comercial+Abastos,+Guadalajara,+Jalisco"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'inline-block', background: '#eb2c29', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.5rem', textDecoration: 'none', fontWeight: 'bold', transition: 'background 0.3s', fontSize: '0.9rem' }}
+              >
+                Abrir en Google Maps
+              </a>
             </div>
 
             <div>
               <h3 style={{ fontSize: '1.3rem', color: '#173c66', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                📞 Teléfonos
+                Teléfonos
               </h3>
               <p style={{ color: '#4b5563', lineHeight: '1.5' }}>
-                (33) 3671 3542<br />
-                (33) 3671 5104
+                (33) 1284-2981<br />
               </p>
             </div>
 
@@ -116,16 +132,18 @@ export default function ContactoPage() {
               </p>
             </div>
 
-            <div style={{ marginTop: '1rem', borderRadius: '0.5rem', overflow: 'hidden', height: '150px' }}>
+            <div style={{ marginTop: '1rem', borderRadius: '0.5rem', overflow: 'hidden', height: '250px' }}>
               <iframe
                 width="100%"
                 height="100%"
                 frameBorder="0"
                 style={{ border: 0 }}
+                sandbox="allow-scripts allow-same-origin"
                 src="https://maps.google.com.mx/maps?f=q&source=s_q&hl=es&geocode=&q=Abeja+1142,+Comercial+Abastos,+Guadalajara,+Jalisco&aq=0&sll=23.625269,-102.540613&sspn=31.162682,39.506836&vpsrc=0&ie=UTF8&hq=&hnear=Abeja+1142,+Guadalajara,+Jalisco&t=m&z=14&ll=20.657239,-103.382687&output=embed"
                 title="Mapa de ubicación"
               />
             </div>
+
           </div>
 
           {/* Columna de Formulario */}
@@ -192,6 +210,25 @@ export default function ContactoPage() {
                 Enviar Mensaje
               </button>
             </form>
+          </div>
+        </div>
+
+        {/* Red de Distribución Nacional (Debajo de todo) */}
+        <div style={{ marginTop: '4rem', padding: '3rem 2rem', background: '#f8fafc', borderRadius: '1rem', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '2rem', color: '#173c66', marginBottom: '1rem', fontWeight: 'bold' }}>
+            Red de Distribución Nacional
+          </h2>
+          <p style={{ color: '#4b5563', marginBottom: '2rem', lineHeight: '1.6', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 2rem' }}>
+            Además de nuestra matriz en Guadalajara, contamos con cobertura y representantes a lo largo de toda la República Mexicana para garantizar la disponibilidad de nuestros productos. Contáctanos para canalizarte con el distribuidor de tu zona.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Image
+              src="/images/mapa.png"
+              alt="Mapa de distribuidores - Cobertura Nacional"
+              width={800}
+              height={457}
+              style={{ maxWidth: '100%', height: 'auto', borderRadius: '1rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)' }}
+            />
           </div>
         </div>
       </div>

@@ -27,8 +27,8 @@ export default function Footer() {
             <p className="footer-text">
               <a href="https://maps.app.goo.gl/FvGz7ZaxvvQYnoJ18" target="_blank" style={{ textDecoration: 'underline' }}>📍  Calle Abeja 1142 Mercado de Abastos Guadalajara, Jalisco C.P. 44530
               </a><br />
-              📞 (33) 1234-5678<br />
-              ✉️ <a href="mailto:desechables_laestrella@hotmail.com" style={{ color: 'inherit', textDecoration: 'underline' }}>desechables_laestrella@hotmail.com</a>
+              📞 (33) 1284-2981<br />
+              ✉️ <a href="mailto:desechables_laestrella@hotmail.com" target="_blank" style={{ color: 'inherit', textDecoration: 'underline' }}>desechables_laestrella@hotmail.com</a>
             </p>
           </div>
         </div>

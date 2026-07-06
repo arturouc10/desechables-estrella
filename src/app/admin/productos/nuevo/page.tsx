@@ -18,15 +18,22 @@ export default function NuevoProductoPage() {
     weight: '',
     stock: null,
     sku: '',
+    disabled: false,
   });
   const [files, setFiles] = useState<File[]>([]);
   const [duplicateProduct, setDuplicateProduct] = useState<any>(null);
   const [newPriceForDuplicate, setNewPriceForDuplicate] = useState<string>('');
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    // Handle null/number conversions for price and stock in submit
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target as HTMLInputElement;
+    let val: any = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    
+    // Prevent negative numbers
+    if ((name === 'price' || name === 'stock') && val !== '') {
+      if (parseFloat(val as string) < 0) val = '0';
+    }
+    
+    setFormData({ ...formData, [name]: val });
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -201,7 +208,8 @@ export default function NuevoProductoPage() {
             <input 
               type="number" 
               name="price" 
-              step="0.01" 
+              step="0.01"
+              min="0"
               className={styles.input} 
               value={formData.price || ''} 
               onChange={handleChange} 
@@ -212,7 +220,8 @@ export default function NuevoProductoPage() {
             <label className={styles.label}>Stock / Inventario</label>
             <input 
               type="number" 
-              name="stock" 
+              name="stock"
+              min="0"
               className={styles.input} 
               value={formData.stock || ''} 
               onChange={handleChange} 
@@ -284,6 +293,20 @@ export default function NuevoProductoPage() {
           )}
         </div>
 
+        <div className={styles.formGroup} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', background: '#f3f4f6', padding: '1rem', borderRadius: '0.5rem' }}>
+          <input 
+            type="checkbox" 
+            id="disabled"
+            name="disabled" 
+            checked={formData.disabled || false} 
+            onChange={handleChange} 
+            style={{ width: '1.2rem', height: '1.2rem', cursor: 'pointer' }}
+          />
+          <label htmlFor="disabled" style={{ cursor: 'pointer', fontWeight: '500', color: '#4b5563', margin: 0 }}>
+            Producto Deshabilitado (No se mostrará en la tienda pública)
+          </label>
+        </div>
+
         <button type="submit" className={styles.primaryButton} disabled={loading} style={{ width: '100%', marginTop: '1rem' }}>
           {loading ? <div className={styles.loader}></div> : '💾 Guardar Producto'}
         </button>
@@ -326,9 +349,13 @@ export default function NuevoProductoPage() {
               <input 
                 type="number"
                 step="0.01"
+                min="0"
                 placeholder="Deja en blanco para conservar el precio viejo"
                 value={newPriceForDuplicate}
-                onChange={(e) => setNewPriceForDuplicate(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setNewPriceForDuplicate(val === '' || parseFloat(val) >= 0 ? val : '0');
+                }}
                 style={{ width: '100%', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #d1d5db', outline: 'none' }}
               />
             </div>

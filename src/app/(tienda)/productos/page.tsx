@@ -4,7 +4,7 @@ import categoriesData from '@/data/categories.json';
 import { prisma } from '@/lib/prisma';
 
 export const metadata = {
-  title: 'Desechables la Estrella - Catálogo de Productos',
+  title: 'Productos | Desechables la Estrella',
   description: 'Catálogo de productos desechables: cubiertos AUM, envases, ecobolsas, bolsas tipo camiseta. Filtre y consulte nuestra variedad.',
 };
 
@@ -16,9 +16,10 @@ export default async function ProductosPage() {
   // Fetch products from database
   let products = [];
   try {
-    products = await prisma.product.findMany({
+    const allProducts = await prisma.product.findMany({
       orderBy: { createdAt: 'desc' }
     });
+    products = allProducts.filter(p => p.disabled !== true);
   } catch (error) {
     console.error("Error fetching products:", error);
   }

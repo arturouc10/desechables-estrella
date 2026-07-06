@@ -2,7 +2,7 @@ import PageLayout from '@/components/PageLayout';
 import Carousel from '@/components/Carousel';
 
 export const metadata = {
-  title: 'Desechables la Estrella - Empresa',
+  title: 'Empresa | Desechables la Estrella',
   description: 'Conoce Desechables la Estrella, empresa 100% mexicana fundada en 1988, líder fabricante y distribuidor de desechables y bolsas ecológicas.',
 };
 

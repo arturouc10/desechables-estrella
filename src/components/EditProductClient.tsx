@@ -20,6 +20,7 @@ export default function EditProductClient({ product }: EditProductClientProps) {
     weight: product.weight || '',
     stock: product.stock !== null ? product.stock : null,
     sku: product.sku || '',
+    disabled: product.disabled || false,
   });
   const [existingImages, setExistingImages] = useState<string[]>(
     product.image ? [product.image] : []
@@ -27,11 +28,17 @@ export default function EditProductClient({ product }: EditProductClientProps) {
   const [newFiles, setNewFiles] = useState<File[]>([]);
   const [newPreviews, setNewPreviews] = useState<string[]>([]);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type } = e.target as HTMLInputElement;
+    let val: any = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    
+    // Prevent negative numbers
+    if ((name === 'price' || name === 'stock') && val !== '') {
+      if (parseFloat(val as string) < 0) val = '0';
+    }
+    
+    setFormData({ ...formData, [name]: val });
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +81,6 @@ export default function EditProductClient({ product }: EditProductClientProps) {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setSuccess('');
 
     try {
       let uploadedUrls: string[] = [];
@@ -115,7 +121,7 @@ export default function EditProductClient({ product }: EditProductClientProps) {
         throw new Error(errorData.error || 'Error al actualizar el producto');
       }
 
-      setSuccess('Producto actualizado correctamente');
+      alert('✅ Producto actualizado correctamente');
       
       // Refresh router so parent page re-fetches
       router.refresh();
@@ -130,7 +136,6 @@ export default function EditProductClient({ product }: EditProductClientProps) {
   return (
     <div>
       {error && <div className={styles.errorAlert}>{error}</div>}
-      {success && <div style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', padding: '1rem', borderRadius: '0.5rem', marginBottom: '1.5rem', border: '1px solid rgba(16, 185, 129, 0.5)' }}>✅ {success}</div>}
 
       <form onSubmit={handleSubmit} className={styles.formContainer}>
         <div className={styles.formGroup}>
@@ -163,7 +168,8 @@ export default function EditProductClient({ product }: EditProductClientProps) {
             <input 
               type="number" 
               name="price" 
-              step="0.01" 
+              step="0.01"
+              min="0"
               className={styles.input} 
               value={formData.price || ''} 
               onChange={handleChange} 
@@ -174,7 +180,8 @@ export default function EditProductClient({ product }: EditProductClientProps) {
             <label className={styles.label}>Stock / Inventario</label>
             <input 
               type="number" 
-              name="stock" 
+              name="stock"
+              min="0"
               className={styles.input} 
               value={formData.stock || ''} 
               onChange={handleChange} 
@@ -249,6 +256,20 @@ export default function EditProductClient({ product }: EditProductClientProps) {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className={styles.formGroup} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', background: '#f3f4f6', padding: '1rem', borderRadius: '0.5rem' }}>
+          <input 
+            type="checkbox" 
+            id="disabled"
+            name="disabled" 
+            checked={formData.disabled || false} 
+            onChange={handleChange} 
+            style={{ width: '1.2rem', height: '1.2rem', cursor: 'pointer' }}
+          />
+          <label htmlFor="disabled" style={{ cursor: 'pointer', fontWeight: '500', color: '#4b5563', margin: 0 }}>
+            Producto Deshabilitado (No se mostrará en la tienda pública)
+          </label>
         </div>
 
         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>

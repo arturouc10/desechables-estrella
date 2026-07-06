@@ -11,6 +11,12 @@ function generateSlug(name: string): string {
 }
 
 export async function GET() {
+  // 🔒 Verify authentication
+  const session = await verifySession();
+  if (!session) {
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+  }
+
   try {
     const products = await prisma.product.findMany({
       orderBy: { createdAt: 'desc' }
@@ -63,6 +69,7 @@ export async function POST(request: Request) {
         stock: data.stock ?? null,
         sku: data.sku ?? null,
         image: data.image ?? null,
+        disabled: data.disabled ?? false,
       }
     });
 

@@ -27,17 +27,27 @@ export async function POST(request: Request) {
     console.log('Fecha:', new Date().toISOString());
     console.log('================================');
 
+    // Function to escape HTML
+    const escapeHTML = (str: string) => {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    };
+
     // Send email with Resend
     const { error } = await resend.emails.send({
       from: 'Desechables La Estrella <onboarding@resend.dev>',
-      to: 'oscarone2002@gmail.com',
+      to: process.env.CONTACT_EMAIL || 'oscarone2002@gmail.com', // ⚠️ Fallback, idealmente usar solo env
       subject: 'DESECHABLES LA ESTRELLA - Nuevo mensaje de contacto',
       html: `
         <h2>Nuevo mensaje de contacto</h2>
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Teléfono:</strong> ${tel}</p>
-        <p><strong>Mensaje:</strong><br/>${comen}</p>
+        <p><strong>Nombre:</strong> ${escapeHTML(nombre)}</p>
+        <p><strong>Email:</strong> ${escapeHTML(email)}</p>
+        <p><strong>Teléfono:</strong> ${escapeHTML(tel)}</p>
+        <p><strong>Mensaje:</strong><br/>${escapeHTML(comen).replace(/\n/g, '<br/>')}</p>
       `,
     });
 

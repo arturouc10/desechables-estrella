@@ -3,26 +3,29 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const bannerImages: string[] = [
-  '/banner_images/banner1.jpg',
-  '/banner_images/banner2.jpg',
-  '/banner_images/banner3.jpg',
-  '/banner_images/banner4.jpg',
-];
+interface BannerSliderProps {
+  images: string[];
+}
 
-export default function BannerSlider() {
+export default function BannerSlider({ images }: BannerSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    if (!images || images.length <= 1) return;
+    
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % bannerImages.length);
+      setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [images]);
+
+  if (!images || images.length === 0) {
+    return null; // No images to show
+  }
 
   return (
     <div className="hero-slider">
-      {bannerImages.map((src, index) => (
+      {images.map((src, index) => (
         <div key={src} className={`hero-slide ${index === currentIndex ? 'active' : ''}`}>
           <Image
             src={src}
@@ -31,19 +34,20 @@ export default function BannerSlider() {
             className="hero-image"
             priority={index === 0}
           />
-          {/* Optional: Add an overlay or text content over the hero image here later */}
         </div>
       ))}
-      <div className="hero-slider-dots">
-        {bannerImages.map((_, index) => (
-          <button
-            key={index}
-            className={`dot ${index === currentIndex ? 'active' : ''}`}
-            onClick={() => setCurrentIndex(index)}
-            aria-label={`Ir a banner ${index + 1}`}
-          />
-        ))}
-      </div>
+      {images.length > 1 && (
+        <div className="hero-slider-dots">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              className={`dot ${index === currentIndex ? 'active' : ''}`}
+              onClick={() => setCurrentIndex(index)}
+              aria-label={`Ir a banner ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
