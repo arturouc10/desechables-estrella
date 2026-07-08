@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import styles from '../../page.module.css';
+import styles from '@/app/(tienda)/page.module.css';
 
 export const revalidate = 3600;
 
