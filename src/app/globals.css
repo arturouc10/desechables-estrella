@@ -1212,34 +1212,67 @@ nav.main-nav ul li a.active {
 
   /* Header: Adjust container */
   .header-container {
-    flex-direction: column;
-    padding: 15px;
-    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px 15px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .header-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .header-logo-link {
+    gap: 10px;
   }
 
   .header-logo {
     flex: none;
-    text-align: center;
   }
 
   .header-logo img {
-    width: 140px;
+    width: 40px; /* Logotipo mucho más pequeño */
     height: auto;
-    margin: 0 auto;
-  }
-
-  .header-brand h1 {
-    font-size: 20px;
-    text-align: center;
-    letter-spacing: 1px;
   }
 
   .header-brand {
-    margin-bottom: 10px;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .header-brand h1 {
+    font-size: 15px; /* Tamaño ajustado */
+    text-align: left;
+    letter-spacing: 0;
+    line-height: 1.1;
+    white-space: normal; /* Permitir salto de línea */
+    /* Se remueven overflow y ellipsis para que no se corte */
+  }
+
+  /* Search bar on second line */
+  .header-center {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-top: 5px;
+  }
+
+  .search-bar input {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .search-button {
+    padding: 8px 12px;
   }
 
   .header-right {
     position: static;
+    order: 2;
+    flex: 0 0 auto;
   }
 
   /* Cart as floating bubble bottom-left */
@@ -1274,21 +1307,21 @@ nav.main-nav ul li a.active {
     padding: 2px 6px;
   }
 
-  /* Show hamburger */
+  /* Show hamburger inline */
   .hamburger-btn {
     display: flex;
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    position: static;
     background: #eb2c29;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 8px;
+    border-radius: 6px;
     z-index: 99999;
     cursor: pointer;
   }
   
   .hamburger-btn span {
     background: #ffffff;
+    width: 22px;
+    height: 2px;
   }
 
   .header-nav-area {
