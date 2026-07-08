@@ -34,6 +34,11 @@ export default async function BolsaDeTrabajoPage() {
         </div>
 
         <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 1.5rem', minHeight: '50vh' }}>
+          <div style={{ marginBottom: '2rem' }}>
+            <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#173c66', textDecoration: 'none', fontWeight: 'bold', padding: '0.5rem 1rem', background: '#f1f5f9', borderRadius: '0.5rem', transition: 'background 0.2s' }}>
+              ← Volver a Inicio
+            </Link>
+          </div>
           {vacantes.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#f9fafb', borderRadius: '1rem', border: '1px dashed #d1d5db' }}>
               <h3 style={{ fontSize: '1.5rem', color: '#374151', marginBottom: '1rem' }}>Por el momento no hay vacantes disponibles</h3>
@@ -74,8 +79,7 @@ export default async function BolsaDeTrabajoPage() {
 
                   <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Link
-                      href={`/vacante/${vacante.id}`}
-                      target="_blank"
+                      href={`/bolsa-de-trabajo/${vacante.id}`}
                       rel="noopener noreferrer"
                       style={{
                         background: '#eb2c29',

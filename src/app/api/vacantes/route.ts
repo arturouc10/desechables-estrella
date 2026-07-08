@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 import { verifySession } from '@/lib/session';
 import { JobVacancySchema } from '@/lib/validations';
@@ -52,6 +53,9 @@ export async function POST(request: Request) {
         active: data.active ?? true,
       }
     });
+
+    // Revalidar la página de bolsa de trabajo para que se actualice inmediatamente
+    revalidatePath('/bolsa-de-trabajo');
 
     return NextResponse.json(newVacancy, { status: 201 });
   } catch (error) {

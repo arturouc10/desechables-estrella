@@ -24,11 +24,11 @@ export default async function HomePage() {
       {bannerUrls.length > 0 && <BannerSlider images={bannerUrls} />}
 
       <PageLayout>
-        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '4rem auto' }}>
-          <h1 style={{ fontSize: '2.5rem', color: '#173c66', marginBottom: '1.5rem', fontWeight: 'bold' }}>
+        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '4rem auto', padding: '0 1.5rem' }}>
+          <h1 style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)', color: '#173c66', marginBottom: '1.5rem', fontWeight: 'bold', lineHeight: '1.2' }}>
             Líderes en Empaques desde 1988
           </h1>
-          <p style={{ fontSize: '1.2rem', color: '#64748b', marginBottom: '2.5rem', lineHeight: '1.6' }}>
+          <p style={{ fontSize: 'clamp(1rem, 3vw, 1.2rem)', color: '#64748b', marginBottom: '2.5rem', lineHeight: '1.6' }}>
             Somos una empresa 100% mexicana dedicada a ofrecer la mejor calidad, servicio y variedad en productos desechables, plásticos y ecológicos a nivel nacional.
           </p>
           <Link href="/empresa" style={{ display: 'inline-block', background: '#173c66', color: '#fff', padding: '1rem 2rem', borderRadius: '0.5rem', fontWeight: 'bold', textDecoration: 'none', fontSize: '1.1rem' }}>
@@ -38,18 +38,18 @@ export default async function HomePage() {
       </PageLayout>
 
       {/* 1. Sección de Beneficios */}
-      <div style={{ maxWidth: '1200px', margin: '3rem auto', padding: '0 1rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', textAlign: 'center' }}>
-        <div style={{ padding: '2rem 1.5rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9' }}>
+      <div style={{ maxWidth: '1200px', margin: '3rem auto', padding: '0 1.5rem', display: 'flex', flexWrap: 'wrap', gap: '2rem', textAlign: 'center', justifyContent: 'center' }}>
+        <div style={{ flex: '1 1 250px', maxWidth: '350px', padding: '2rem 1.5rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🏆</div>
           <h3 style={{ fontSize: '1.25rem', color: '#173c66', marginBottom: '0.5rem', fontWeight: 'bold' }}>Más de 35 años</h3>
           <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.5' }}>Experiencia y solidez desde 1988 en el mercado de empaques.</p>
         </div>
-        <div style={{ padding: '2rem 1.5rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9' }}>
+        <div style={{ flex: '1 1 250px', maxWidth: '350px', padding: '2rem 1.5rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🚚</div>
           <h3 style={{ fontSize: '1.25rem', color: '#173c66', marginBottom: '0.5rem', fontWeight: 'bold' }}>Cobertura Nacional</h3>
           <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.5' }}>Llegamos a todas las ciudades y poblaciones de México.</p>
         </div>
-        <div style={{ padding: '2rem 1.5rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9' }}>
+        <div style={{ flex: '1 1 250px', maxWidth: '350px', padding: '2rem 1.5rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⭐</div>
           <h3 style={{ fontSize: '1.25rem', color: '#173c66', marginBottom: '0.5rem', fontWeight: 'bold' }}>Calidad Garantizada</h3>
           <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.5' }}>Representamos exclusivamente a las fábricas líderes del país.</p>
@@ -72,8 +72,8 @@ export default async function HomePage() {
       {/* 4. Tira de Marcas (Fuera del PageLayout para que ocupe todo el ancho) */}
       <div style={{ background: '#f8fafc', padding: '4rem 1rem', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '1.75rem', color: '#173c66', marginBottom: '2.5rem', fontWeight: 'bold' }}>Marcas que nos respaldan</h2>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '4rem', flexWrap: 'wrap', opacity: 0.8, alignItems: 'center' }}>
+          <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 1.75rem)', color: '#173c66', marginBottom: '2.5rem', fontWeight: 'bold' }}>Marcas que nos respaldan</h2>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(1.5rem, 4vw, 4rem)', flexWrap: 'wrap', opacity: 0.8, alignItems: 'center' }}>
             {/* Ejemplo de cómo agregar un logo real: */}
             {/* 
             <Image 

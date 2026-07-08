@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 import { verifySession } from '@/lib/session';
 import { JobVacancySchema } from '@/lib/validations';
@@ -44,6 +45,11 @@ export async function PUT(
       }
     });
 
+    // Revalidar la caché
+    revalidatePath('/bolsa-de-trabajo');
+    revalidatePath(`/vacante/${id}`);
+    revalidatePath(`/bolsa-de-trabajo/${id}`);
+
     return NextResponse.json(updatedVacancy, { status: 200 });
   } catch (error) {
     console.error("Error al actualizar vacante:", error);
@@ -67,6 +73,9 @@ export async function DELETE(
     await prisma.jobVacancy.delete({
       where: { id }
     });
+
+    // Revalidar la caché
+    revalidatePath('/bolsa-de-trabajo');
 
     return NextResponse.json({ message: "Vacante eliminada correctamente" }, { status: 200 });
   } catch (error) {
