@@ -1,4 +1,5 @@
 import { PrismaClient } from '../generated/prisma/client';
+// Force Turbopack cache invalidation
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 

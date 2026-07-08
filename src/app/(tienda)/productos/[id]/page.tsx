@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     where: { id }
   });
 
-  if (!product) {
+  if (!product || product.disabled) {
     return {
       title: 'Producto no encontrado | Desechables la Estrella',
     };
@@ -37,18 +37,19 @@ export default async function ProductDetailsPage({ params }: ProductPageProps) {
     where: { id }
   });
 
-  if (!product) {
+  if (!product || product.disabled) {
     notFound();
   }
 
   // Fetch related products (same category, excluding the current one)
-  const relatedProducts = await prisma.product.findMany({
+  const allRelated = await prisma.product.findMany({
     where: {
       category: product.category,
       NOT: { id: product.id }
-    },
-    take: 4
+    }
   });
+  
+  const relatedProducts = allRelated.filter(p => p.disabled !== true).slice(0, 4);
 
   const productImages = [product.image || '/images/placeholder.jpg'];
 

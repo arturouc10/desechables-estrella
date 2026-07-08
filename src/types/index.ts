@@ -23,6 +23,7 @@ export interface ProductFormData {
   sku?: string;
   image?: string | null;
   images?: string[];
+  disabled?: boolean;
 }
 
 // Category item from categories.json

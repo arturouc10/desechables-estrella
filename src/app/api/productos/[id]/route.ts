@@ -44,6 +44,7 @@ export async function PUT(
         stock: data.stock !== undefined ? data.stock : existing.stock,
         sku: data.sku !== undefined ? data.sku : existing.sku,
         image: data.image !== undefined ? data.image : existing.image,
+        disabled: data.disabled !== undefined ? data.disabled : existing.disabled,
       }
     });
 

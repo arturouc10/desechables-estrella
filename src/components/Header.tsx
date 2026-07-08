@@ -23,9 +23,9 @@ function SearchInput() {
 
   return (
     <form className="search-bar" onSubmit={handleSearch}>
-      <input 
-        type="text" 
-        placeholder="Buscar productos..." 
+      <input
+        type="text"
+        placeholder="Buscar productos..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
@@ -39,14 +39,15 @@ function SearchInput() {
 interface NavItem {
   href: string;
   label: string;
+  target?: string;
 }
 
 const navItems: NavItem[] = [
   { href: '/', label: 'Inicio' },
   { href: '/empresa', label: 'Empresa' },
   { href: '/productos', label: 'Productos' },
-  { href: '/ubicacion', label: 'Ubicación' },
   { href: '/contacto', label: 'Contacto' },
+  { href: '/bolsa-de-trabajo', label: 'Bolsa de Trabajo', target: '_blank' },
 ];
 
 export default function Header() {
@@ -119,9 +120,11 @@ export default function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  target={item.target}
+                  rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                   className={pathname === item.href ? 'active' : ''}
                   id={`nav-${item.href.replace('/', '') || 'inicio'}`}
-                  onClick={closeMenu}
+                  onClick={item.target === '_blank' ? undefined : closeMenu}
                 >
                   {item.label}
                 </Link>

@@ -10,12 +10,12 @@ export const metadata = {
 
 export default function AumPage() {
   return (
-      <PageLayout>
-        <div className="product-grid">
-          {(products as StaticProduct[]).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </PageLayout>
+    <PageLayout>
+      <div className="product-grid">
+        {(products as StaticProduct[]).map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </PageLayout>
   );
 }
