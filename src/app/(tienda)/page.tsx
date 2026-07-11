@@ -12,12 +12,22 @@ export const metadata = {
 export const revalidate = 0; // Revalida en cada request para mostrar nuevas imágenes
 
 export default async function HomePage() {
-  const carouselImages = await prisma.carouselImage.findMany({
-    where: { active: true },
-    orderBy: { order: 'asc' },
-  });
+  const [carouselImages, brandImages, siteSetting] = await Promise.all([
+    prisma.carouselImage.findMany({
+      where: { active: true },
+      orderBy: { order: 'asc' },
+    }),
+    prisma.brandImage.findMany({
+      where: { active: true },
+      orderBy: { order: 'asc' },
+    }),
+    prisma.siteSetting.findUnique({
+      where: { key: 'YOUTUBE_URL' }
+    })
+  ]);
 
   const bannerUrls = carouselImages.map((img) => img.url);
+  const youtubeUrl = siteSetting?.value || "https://www.youtube.com/embed/ID_DEL_VIDEO_AQUI";
 
   return (
     <>
@@ -60,7 +70,7 @@ export default async function HomePage() {
       <div style={{ width: '100%', maxWidth: '1200px', margin: '2rem auto 4rem auto', padding: '0 1rem' }}>
         <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '1rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', background: '#f1f5f9' }}>
           <iframe
-            src="https://www.youtube.com/embed/ID_DEL_VIDEO_AQUI"
+            src={youtubeUrl}
             title="Video Desechables Estrella"
             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -69,26 +79,31 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* 4. Tira de Marcas (Fuera del PageLayout para que ocupe todo el ancho) */}
+      {/* 4. Tira de Marcas */}
       <div style={{ background: '#f8fafc', padding: '4rem 1rem', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 1.75rem)', color: '#173c66', marginBottom: '2.5rem', fontWeight: 'bold' }}>Marcas que nos respaldan</h2>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(1.5rem, 4vw, 4rem)', flexWrap: 'wrap', opacity: 0.8, alignItems: 'center' }}>
-            {/* Ejemplo de cómo agregar un logo real: */}
-            {/* 
-            <Image 
-              src="/images/logos/marca1.png" 
-              alt="Logo Marca 1" 
-              width={120} 
-              height={60} 
-              style={{ objectFit: 'contain' }} 
-            /> 
-            */}
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 1</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 2</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 3</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 4</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 5</div>
+            
+            {brandImages.length > 0 ? (
+              brandImages.map((brand) => (
+                <img 
+                  key={brand.id}
+                  src={brand.url} 
+                  alt="Marca" 
+                  style={{ maxHeight: '80px', maxWidth: '200px', objectFit: 'contain' }} 
+                />
+              ))
+            ) : (
+              <>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 1</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 2</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 3</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 4</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#64748b' }}>MARCA 5</div>
+              </>
+            )}
+
           </div>
         </div>
       </div>

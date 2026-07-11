@@ -74,12 +74,12 @@ export default function AdminSidebar() {
               router.push('/admin/carrusel');
             }}
           >
-            <span>🖼️ Carrusel</span>
+            <span>⚙️ Config. Inicio</span>
             <span>{openSection === 'carrusel' ? '▼' : '▶'}</span>
           </div>
           {openSection === 'carrusel' && (
             <div className={styles.sidebarSubMenu}>
-              <Link href="/admin/carrusel" className={styles.navLink}>Editar Fotos</Link>
+              <Link href="/admin/carrusel" className={styles.navLink}>Editar Inicio</Link>
             </div>
           )}
         </div>
