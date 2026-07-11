@@ -27,7 +27,17 @@ export default async function HomePage() {
   ]);
 
   const bannerUrls = carouselImages.map((img) => img.url);
-  const youtubeUrl = siteSetting?.value || "https://www.youtube.com/embed/ID_DEL_VIDEO_AQUI";
+  let rawUrl = siteSetting?.value || "https://www.youtube.com/embed/ID_DEL_VIDEO_AQUI";
+  let youtubeUrl = rawUrl;
+  
+  if (rawUrl.includes("watch?v=")) {
+    const urlObj = new URL(rawUrl);
+    const videoId = urlObj.searchParams.get("v");
+    if (videoId) youtubeUrl = `https://www.youtube.com/embed/${videoId}`;
+  } else if (rawUrl.includes("youtu.be/")) {
+    const videoId = rawUrl.split("youtu.be/")[1]?.split("?")[0];
+    if (videoId) youtubeUrl = `https://www.youtube.com/embed/${videoId}`;
+  }
 
   return (
     <>
