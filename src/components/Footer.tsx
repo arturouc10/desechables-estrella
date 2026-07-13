@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -16,10 +16,11 @@ export default function Footer() {
           <div className="footer-column">
             <h3>Enlaces Rápidos</h3>
             <ul className="footer-links">
-              <li><a href="/">Inicio</a></li>
-              <li><a href="/empresa">Nuestra Empresa</a></li>
-              <li><a href="/productos">Catálogo de Productos</a></li>
-              <li><a href="/contacto">Contacto</a></li>
+              <li><Link href="/">Inicio</Link></li>
+              <li><Link href="/empresa">Nuestra Empresa</Link></li>
+              <li><Link href="/productos">Catálogo de Productos</Link></li>
+              <li><Link href="/contacto">Contacto</Link></li>
+              <li><Link href="/privacidad">Aviso de Privacidad</Link></li>
             </ul>
           </div>
           <div className="footer-column">

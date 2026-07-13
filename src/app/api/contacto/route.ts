@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { ContactSchema } from '@/lib/validations';
+import { rateLimit } from '@/lib/rate-limit';
 
 export async function POST(request: Request) {
+  const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
+  // Límite: 3 solicitudes cada 10 minutos (600000 ms)
+  if (!rateLimit(ip, 3, 600000)) {
+    return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta más tarde.' }, { status: 429 });
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const body = await request.json();
