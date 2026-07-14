@@ -8,7 +8,7 @@ export const metadata = {
   description: 'Conoce Desechables la Estrella, empresa 100% mexicana fundada en 1988, líder fabricante y distribuidor de desechables y bolsas ecológicas.',
 };
 
-// Definir las imágenes a mostrar en el carrusel, excluyendo las solicitadas
+// Definir las imágenes a mostrar en el carrusel, excluyendo las solicitadas xd
 const fabImages = [1, 2, 3, 4, 6, 7, 8].map(i => `/images/fab/${i}.jpg`);
 const empresaImages = [3, 5, 8, 9].map(i => `/images/empresa/${i}.jpg`);
 const allImages: string[] = [...fabImages, ...empresaImages];
