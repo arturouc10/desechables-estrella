@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 import styles from '@/app/(tienda)/page.module.css';
 import Footer from '@/components/Footer';
@@ -26,11 +27,28 @@ export default async function BolsaDeTrabajoPage() {
   return (
     <>
       <div className={styles.mainContainer} style={{ minHeight: 'calc(100vh - 400px)' }}>
-        <div className={styles.headerSection} style={{ background: 'linear-gradient(135deg, #173c66 0%, #0d223a 100%)', padding: '4rem 2rem', textAlign: 'center', borderRadius: '0 0 2rem 2rem', marginBottom: '3rem' }}>
-          <h1 className={styles.title} style={{ color: '#fff', fontSize: '2.5rem', marginBottom: '1rem' }}>Bolsa de Trabajo</h1>
-          <p className={styles.subtitle} style={{ color: '#e5e7eb', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>
-            Forma parte de la familia Desechables la Estrella. Explora las oportunidades que tenemos para ti.
-          </p>
+        <div className={styles.headerSection} style={{ background: 'linear-gradient(135deg, #173c66 0%, #0d223a 100%)', padding: '3rem 2rem', borderRadius: '0 0 2rem 2rem', marginBottom: '3rem' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '2rem' }}>
+            
+            {/* Contenedor del Logo: Empuja hacia la izquierda pero cede el centro */}
+            <div style={{ flex: '1 1 220px', display: 'flex', justifyContent: 'flex-start' }}>
+              <div style={{ background: '#fff', borderRadius: '50%', padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.2)' }}>
+                <Image src="/images/logo.png" alt="Logo Estrella" width={170} height={170} style={{ objectFit: 'contain' }} priority />
+              </div>
+            </div>
+
+            {/* Contenedor de Texto: Perfectamente centrado gracias a los espacios laterales */}
+            <div style={{ flex: '0 1 auto', textAlign: 'center', maxWidth: '100%' }}>
+              <h1 className={styles.title} style={{ color: '#fff', fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>Bolsa de Trabajo</h1>
+              <p className={styles.subtitle} style={{ color: '#e5e7eb', maxWidth: '600px', margin: '0 auto', fontSize: '1.15rem', lineHeight: '1.6' }}>
+                Forma parte de la familia Desechables la Estrella. Explora las oportunidades que tenemos para ti.
+              </p>
+            </div>
+
+            {/* Espaciador Fantasma: Contrapeso para el logo que garantiza el centrado exacto */}
+            <div style={{ flex: '1 1 220px' }}></div>
+
+          </div>
         </div>
 
         <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 1.5rem', minHeight: '50vh' }}>

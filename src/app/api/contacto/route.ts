@@ -44,10 +44,15 @@ export async function POST(request: Request) {
         .replace(/'/g, '&#039;');
     };
 
+    if (!process.env.CONTACT_EMAIL) {
+      throw new Error("CONTACT_EMAIL environment variable is not defined");
+    }
+
     // Send email with Resend
     const { error } = await resend.emails.send({
       from: 'Desechables La Estrella <onboarding@resend.dev>',
-      to: process.env.CONTACT_EMAIL || 'oscarone2002@gmail.com', // ⚠️ Fallback, idealmente usar solo env
+      to: process.env.CONTACT_EMAIL, // Seguro: sólo usa la variable de entorno
+
       subject: 'DESECHABLES LA ESTRELLA - Nuevo mensaje de contacto',
       html: `
         <h2>Nuevo mensaje de contacto</h2>
