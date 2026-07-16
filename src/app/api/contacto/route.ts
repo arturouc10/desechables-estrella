@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
 import { Resend } from 'resend';
 import { ContactSchema } from '@/lib/validations';
 import { rateLimit } from '@/lib/rate-limit';
