@@ -139,7 +139,7 @@ export default function ContactoPage() {
                 frameBorder="0"
                 style={{ border: 0 }}
                 sandbox="allow-scripts allow-same-origin"
-                src="https://maps.google.com.mx/maps?f=q&source=s_q&hl=es&geocode=&q=Abeja+1142,+Comercial+Abastos,+Guadalajara,+Jalisco&aq=0&sll=23.625269,-102.540613&sspn=31.162682,39.506836&vpsrc=0&ie=UTF8&hq=&hnear=Abeja+1142,+Guadalajara,+Jalisco&t=m&z=14&ll=20.657239,-103.382687&output=embed"
+                src="https://maps.google.com/maps?q=Calle+Abeja+1142,+Mercado+de+Abastos,+Guadalajara,+Jalisco&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 title="Mapa de ubicación"
               />
             </div>
