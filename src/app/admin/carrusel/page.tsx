@@ -21,6 +21,7 @@ export default function HomeSettingsAdminPage() {
   const [images, setImages] = useState<CarouselImage[]>([]);
   const [brandImages, setBrandImages] = useState<BrandImage[]>([]);
   const [youtubeUrl, setYoutubeUrl] = useState('');
+  const [showYoutube, setShowYoutube] = useState(true);
   
   const [loading, setLoading] = useState(true);
   const [uploadingCarousel, setUploadingCarousel] = useState(false);
@@ -45,6 +46,7 @@ export default function HomeSettingsAdminPage() {
       if (resSettings.ok) {
         const settings = await resSettings.json();
         setYoutubeUrl(settings.YOUTUBE_URL || '');
+        setShowYoutube(settings.SHOW_YOUTUBE !== 'false');
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -166,16 +168,21 @@ export default function HomeSettingsAdminPage() {
   const handleSaveYoutube = async () => {
     setSavingYoutube(true);
     try {
-      const res = await fetch('/api/settings', {
+      const res1 = await fetch('/api/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key: 'YOUTUBE_URL', value: youtubeUrl })
       });
-      if (res.ok) alert('Enlace de YouTube guardado correctamente');
-      else alert('Error al guardar el enlace');
+      const res2 = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: 'SHOW_YOUTUBE', value: showYoutube ? 'true' : 'false' })
+      });
+      if (res1.ok && res2.ok) alert('Configuración de YouTube guardada correctamente');
+      else alert('Error al guardar la configuración');
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al guardar el enlace');
+      alert('Error al guardar la configuración');
     } finally {
       setSavingYoutube(false);
     }
@@ -193,21 +200,33 @@ export default function HomeSettingsAdminPage() {
         <p style={{ color: '#64748b', marginBottom: '1rem', fontSize: '0.9rem' }}>
           Ingresa el enlace de inserción (embed) o el enlace normal del video de YouTube que quieres mostrar en el inicio.
         </p>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <input
-            type="text"
-            value={youtubeUrl}
-            onChange={(e) => setYoutubeUrl(e.target.value)}
-            placeholder="Ej: https://www.youtube.com/embed/ID_DEL_VIDEO"
-            style={{ flex: 1, padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #cbd5e1' }}
-          />
-          <button 
-            onClick={handleSaveYoutube}
-            disabled={savingYoutube}
-            style={{ background: '#173c66', color: '#fff', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 'bold' }}
-          >
-            {savingYoutube ? 'Guardando...' : 'Guardar'}
-          </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+            <input 
+              type="checkbox" 
+              checked={showYoutube}
+              onChange={(e) => setShowYoutube(e.target.checked)}
+              style={{ width: '1.2rem', height: '1.2rem' }}
+            />
+            <span style={{ fontWeight: 'bold', color: '#334155' }}>Mostrar apartado de video en el inicio</span>
+          </label>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <input
+              type="text"
+              value={youtubeUrl}
+              onChange={(e) => setYoutubeUrl(e.target.value)}
+              placeholder="Ej: https://www.youtube.com/embed/ID_DEL_VIDEO"
+              style={{ flex: 1, padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #cbd5e1' }}
+              disabled={!showYoutube}
+            />
+            <button 
+              onClick={handleSaveYoutube}
+              disabled={savingYoutube}
+              style={{ background: '#173c66', color: '#fff', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 'bold' }}
+            >
+              {savingYoutube ? 'Guardando...' : 'Guardar'}
+            </button>
+          </div>
         </div>
       </div>
 

@@ -21,13 +21,17 @@ export default async function HomePage() {
       where: { active: true },
       orderBy: { order: 'asc' },
     }),
-    prisma.siteSetting.findUnique({
-      where: { key: 'YOUTUBE_URL' }
+    prisma.siteSetting.findMany({
+      where: { key: { in: ['YOUTUBE_URL', 'SHOW_YOUTUBE'] } }
     })
   ]);
 
   const bannerUrls = carouselImages.map((img) => img.url);
-  let rawUrl = siteSetting?.value || "https://www.youtube.com/embed/ID_DEL_VIDEO_AQUI";
+  const ytUrlSetting = siteSetting.find(s => s.key === 'YOUTUBE_URL');
+  const ytShowSetting = siteSetting.find(s => s.key === 'SHOW_YOUTUBE');
+
+  let rawUrl = ytUrlSetting?.value || "https://www.youtube.com/embed/ID_DEL_VIDEO_AQUI";
+  let showYoutube = ytShowSetting?.value !== 'false';
   let youtubeUrl = rawUrl;
   
   if (rawUrl.includes("watch?v=")) {
@@ -77,17 +81,19 @@ export default async function HomePage() {
       </div>
 
       {/* Contenedor del Video de YouTube */}
-      <div style={{ width: '100%', maxWidth: '1200px', margin: '2rem auto 4rem auto', padding: '0 1rem' }}>
-        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '1rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', background: '#f1f5f9' }}>
-          <iframe
-            src={youtubeUrl}
-            title="Video Desechables Estrella"
-            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
+      {showYoutube && (
+        <div style={{ width: '100%', maxWidth: '1200px', margin: '2rem auto 4rem auto', padding: '0 1rem' }}>
+          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '1rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', background: '#f1f5f9' }}>
+            <iframe
+              src={youtubeUrl}
+              title="Video Desechables Estrella"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* 4. Tira de Marcas */}
       <div style={{ background: '#f8fafc', padding: '4rem 1rem', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>

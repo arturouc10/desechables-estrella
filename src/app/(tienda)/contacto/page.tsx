@@ -132,17 +132,7 @@ export default function ContactoPage() {
               </p>
             </div>
 
-            <div style={{ marginTop: '1rem', borderRadius: '0.5rem', overflow: 'hidden', height: '250px' }}>
-              <iframe
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                style={{ border: 0 }}
-                sandbox="allow-scripts allow-same-origin"
-                src="https://maps.google.com/maps?q=Calle+Abeja+1142,+Mercado+de+Abastos,+Guadalajara,+Jalisco&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                title="Mapa de ubicación"
-              />
-            </div>
+
 
           </div>
 
